@@ -1,16 +1,21 @@
 import express from "express";
+import {adicionarServico} from "./servico.js"
 
 const app = express();
 
-const constante ="true";
 
-let variavel ="variavel";
 
-app.get("/hello", (req, res) => {
-    console.log("Hello world");
+app.get("/", (req, res) => {
     res.send("Hello world");
 });
 
+app.post("/adicionar-servico", (req, res) => {
+    const novoServico = req.body
+
+    adicionarServico(novoServico)
+})
+
 app.listen(8080,() => {
     console.log("Server running on port 8080")
+    
 })
