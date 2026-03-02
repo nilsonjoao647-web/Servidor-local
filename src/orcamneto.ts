@@ -1,16 +1,57 @@
-interface PedidoSevico {
-    cliente: string;
-    descricao: string;
-    horasEstimada: number;
-    urgente: boolean
+import { catalogoServicos } from "./servico.js"
+import { type PedidoSevicoType, type ServicoType } from "./utils/types.js"
+
+const taxaUrgencia: number = 0.3
+const minimoParaDesconto: number = 100
+const percentagemDesconto: number = 0.1
+
+
+const servicoSelecionados: ServicoType[] = []
+
+//funcao para selecionar servicos e horas estimadas
+export function selecionarServicos(nome: string) {
+    for (let i = 0; i < catalogoServicos.length; i++) {
+        if (catalogoServicos[i]?.nome === nome) {
+            servicoSelecionados.push(catalogoServicos[i]!)
+            return true
+        }
+    }
+    return false
 }
 
-function Orcamento (pedidoServico: PedidoSevico, precoHora: number){
-    const valorBase = precoHora * pedidoServico.horasEstimada
-    let urgente = true
-    let urgentePrice = 0
-    urgente === true ? urgentePrice = valorBase * 0.30 : urgentePrice = 0
-    let Orcamento = 0
-    Orcamento = valorBase + urgentePrice
-    return Orcamento
+// funcao para calcular o orcamento
+export function calcularOrcamento(pedido: PedidoSevicoType) {
+    let totalBruto: number = 0
+    let totalFinal: number = 0
+
+    servicoSelecionados.map((servico: ServicoType) => {
+        let totalDoServico: number = servico.precoHora * pedido.horasEstimadas
+        totalBruto = totalBruto + totalDoServico
+    })
+
+    if (pedido.urgente) {
+        totalFinal = totalBruto + (totalBruto * taxaUrgencia)
+    }
+
+    if (totalBruto >= minimoParaDesconto) {
+        totalFinal = totalFinal - (totalBruto * percentagemDesconto)
+    }
+
+    // () => {} --- arrow function
+    // function () {} --- function normal
+
+    /*
+    urgent:true
+    taxaurgencia: 0.3
+    totalBruto: 100
+    totalTaxa: 100 * 0.3 = 30
+    totalFinal: 100 + 30 = 130
+
+    totalBruto: 100
+    totalbruto apos urgencia: 150
+    minimo desconto : 100
+    percentagem: 10%
+    desconto sobre total final: 150* 0.1 = 15
+    desconto sobre total bruto: 100* 0.1 = 10
+    */
 }

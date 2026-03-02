@@ -1,28 +1,67 @@
-interface ServicoType {
-    nome: string,
-    precoHora: number,
-    categoria: string,
-    minimoDescontado: number,
-    percentagemDeconto: number
-}
+import { type ResponseType, type ServicoType } from "./utils/types.js"
 
-let catagoriaServicos: ServicoType [] = []
+export let catalogoServicos: ServicoType[] = []
 
-export function adicionarServico(novoservico: ServicoType){
-    if (novoservico.nome  && novoservico.precoHora <= 0) {
-        return "Erro: Nome obrigatório e preço deve ser maio que zero."
+
+// adicionar um serviço novo
+export function adicionarServico(novoServico: ServicoType): ResponseType {
+    if (!novoServico.nome || novoServico.precoHora <= 0) {
+        return ({
+            status: false,
+            message: "Erro: Nome obrigatório e preço deve ser maior que zero.",
+            data: null,
+        });
     }
 
-    for (let i = 0; 1 <catagoriaServicos.length; i++){
-        if (catagoriaServicos[i]?.nome === novoservico.nome){
-            return `Erro: O seviço ${novoservico.nome} já existe.`
+    for (let i = 0; i < catalogoServicos.length; i++) {
+        if (catalogoServicos[i]?.nome === novoServico.nome) {
+            return ({
+                status: false,
+                message: `Erro: O serviço '${novoServico.nome}' já existe.`,
+                data: null,
+            });
         }
     }
 
-    catagoriaServicos.push(novoservico);
+    catalogoServicos.push(novoServico);
+
     return ({
-        status: true ,
+        status: true,
         message: "Sucesso: Serviço adicionado!",
-        data: novoservico
-    })
+        data: novoServico,
+    });
+}
+
+// listar todos os serviços
+export function listarServicos(): ServicoType[] {
+    // TODO: implementar fetch de servicos
+
+    return catalogoServicos
+}
+
+// apagar um servico 
+export function apagarServico(nome: string): boolean {
+    // TODO: implementar delete de servico
+
+    const novoCatalogoTemp: ServicoType[] = []
+
+    for (let i = 0; i < catalogoServicos.length; i++) {
+        if (catalogoServicos[i]?.nome !== undefined && catalogoServicos[i]?.nome !== nome) {
+            novoCatalogoTemp.push(catalogoServicos[i]!)
+        }
+    } // devolve um novo catalogo sem o servico que foi apagado
+
+    catalogoServicos = novoCatalogoTemp
+
+    return true
+}
+
+// obter um servico pelo nome
+export function obterServico(nome: string): ServicoType | null {
+    for (let i = 0; i < catalogoServicos.length; i++) {
+        if (catalogoServicos[i]?.nome === nome) {
+            return catalogoServicos[i]!
+        }
+    }
+    return null
 }
