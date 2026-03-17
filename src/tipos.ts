@@ -1,8 +1,4 @@
-interface AlunosType {
-    nome: string;   
-    endereco: string;
-    contacto: string;
-}
+import type { AlunosType } from "./utils/types.js";
 
 const alunos: Array<AlunosType> = [
     {
