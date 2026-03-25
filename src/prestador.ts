@@ -1,4 +1,4 @@
-import { inserirServico } from "./index.js";
+
 import { prestadoresDeServico } from "./orcamneto.js";
 import type { inserirType, PrestadorType } from "./utils/types.js";
 

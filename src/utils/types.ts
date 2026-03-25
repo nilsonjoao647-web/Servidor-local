@@ -58,3 +58,91 @@ export interface ServicoDBType {
     created_at: string,
     updated_at: string
 }
+
+export interface UserType {
+    id: string,
+    nome: string,
+    numero_identificado: string,
+    data_nascimento: string,
+    email: string,
+    telefone: string,
+    pais: string,
+    localidade: string,
+    password: string;
+    enabled: boolean;
+    created_at: string;
+    updated_at: string
+}
+
+export interface userType {
+    id: string,
+    nome: string,
+    numero_identificado: string,
+    data_nascimento: string,
+    email: string,
+    telefone: string,
+    pais: string,
+    localidade: string,
+    password: string;
+    enabled: boolean;
+    created_at: string;
+    updated_at: string
+}
+
+export interface orcamentoType {
+    id: string,
+    total: string,
+    id_utilizadores: string,
+    enabled: boolean,
+    created_at: string
+    update_at: string
+}
+
+export interface propostaType {
+    id: string,
+    id_prestacao_servico: string,
+    preco_hora: string,
+    hora_estimadas: string,
+    estado: string,
+    created_at: string,
+    update_at: string
+}
+
+export interface prestadorType {
+    id: string,
+    nif: number,
+    taxa_urgencia: string,
+    minimo_desconto: string,
+    percentagem_desconto: string,
+    disponivel: string,
+    created_at: string,
+    update_at: string
+}
+
+export interface prestadorType {
+    id: string,
+    nif: number,
+    profissao: string,
+    taxa_urgencia: string,
+    minimo_desconto: string,
+    percentagem_desconto: string,
+    disponivel: string,
+    enabled: boolean,
+    created_at: string,
+    update_at: string
+}
+
+export interface prestacao_servicoType {
+    id: string,
+    designacao: string,
+    subtotal: string,
+    horas_estimadas: string,
+    id_prestador: string,
+    id_servico: string,
+    preco_hora: string,
+    estado: string,
+    id_orcamento: string,
+    enabled: boolean,
+    created_at: string,
+    update_at: string
+}

@@ -1,0 +1,115 @@
+import {  UserModel } from "../models/users.model.js"
+import type { userType } from "../utils/types.js"
+import type { Request, Response } from "express"
+
+export const UserController = {
+    async createUser(req: Request, res: Response) {
+        const user: userType = req.body
+
+        if (!user) {
+            return res.status(400).json({
+                error: "utilizador nao encontrado",
+            })
+        }
+            const createUserResponse = await UserModel.create(user);
+            res.json(createUserResponse)
+    },
+
+async allUsers(req: Request, res: Response) {
+    const getUserResponse = await UserModel.allUser()
+
+        res.json(getUserResponse);
+},
+
+async get(req: Request, res: Response) {
+        const id = req.params.id
+
+        if (!id) {
+            return res.status(400).json({
+                status: "error",
+                message: "ID do servico nao fornecido",
+                data: null
+            })
+        }
+
+        const getServiceResponse = await UserModel.getUser(id as string)
+        if (!getServiceResponse) {
+            return res.status(400).json({
+                status: "error",
+                message: "Servico nao encontrado",
+                data: null
+            })
+        }
+        return res.status(200).json({
+            status: "Success",
+            message: "Servico encontrado com sucesso",
+            data: null
+        })
+    },
+
+    async update(req: Request, res: Response) {
+        const { id } = req.params
+
+        const updatedServico: userType = req.body
+
+        if (!id) {
+            return res.status(400).json({
+                status: "error",
+                message: "ID obrigatorio",
+                data: null
+            })
+        }
+
+        if (!updatedServico) {
+            return res.status(400).json({
+                status: "error",
+                message: "Dados de servicos invalidos",
+                data: null
+            })
+        }
+
+        const updatedServicoResponse = await UserModel.update(id as string, updatedServico)
+
+        if (!updatedServicoResponse) {
+            return res.status(400).json({
+                status: "error",
+                message: "Error ao atualizar servico",
+                data: null
+            })
+        }
+
+
+        return res.status(400).json({
+            status: "success",
+            message: "servico atualizado com sucesso",
+            data: null
+        })
+    },
+
+    async delete(req: Request, res: Response) {
+        const { id } = req.params
+
+        if (!id) {
+            return res.status(400).json({
+                status: "error",
+                message: "ID obrigatorio",
+                data: null
+            })
+        }
+
+        const deleteServicoResponse = await UserModel.delete(id as string)
+        if (!deleteServicoResponse) {
+            return res.status(400).json({
+                status: "error",
+                message: "Erro ao apagar servico",
+                data: null
+            })
+        }
+
+        return res.status(200).json({
+            status: "success",
+            message: "Servico apagado com success",
+            data: deleteServicoResponse
+        })
+    }
+}
