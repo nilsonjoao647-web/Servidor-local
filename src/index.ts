@@ -1,11 +1,24 @@
 import express, { type Request, type Response } from "express"
 import { Router as serviceRouter} from "./routes/servico.route.js"
-
+import {Router as orcamentoRouter} from "./routes/orcamento.route.js"
+import {Router as prestadorRouter} from "./routes/prestador.route.js"
+import {Router as userRouter} from "./routes/users.route.js"
+import {Router as propostaRouter } from "./routes/proposta.route.js"
+import {Router as prestasao_ServicoRouter} from "./routes/prestacao_servico.route.js"
+import { swaggerSpec } from "./docs/swagger.js"
+import swaggerUi from "swagger-ui-express"
 
 const app = express()
 app.use(express.json())
 
 app.use("/service", serviceRouter)
+app.use("/orcamento", orcamentoRouter)
+app.use("/prestador", prestadorRouter)
+app.use("/user", userRouter)
+app.use("/proposta", propostaRouter)
+app.use("/prestasaoServico", prestasao_ServicoRouter)
+
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
 app.get("/", (req: Request, res: Response) => {
     res.send("Hello World!")

@@ -1,5 +1,5 @@
 import path from "path"
-import swaggerJsdoc from "swagger-Jsdoc"
+import swaggerJsdoc from "swagger-jsdoc"
 
 const option: swaggerJsdoc.Options = {
     definition: {
@@ -14,13 +14,12 @@ const option: swaggerJsdoc.Options = {
                 url: "http://localhost:8080",
                 description: "dev",
             }
-        ],
-
-        apis: [
-            path.join(process.cwd(), "./src/doc/schemas/*.yaml"),
-            path.join(process.cwd(), "./src/doc/paths/*.yaml"),
         ]
-    }
+    },
+    apis: [
+        path.join(process.cwd(), "./src/doc/schemas/*.yaml"),
+        path.join(process.cwd(), "./src/doc/paths/*.yaml"),
+    ]
 }
 
 export const swaggerSpec = swaggerJsdoc(option);

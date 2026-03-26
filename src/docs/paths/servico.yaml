@@ -22,7 +22,6 @@ paths:
                 type: object
                 $ref: "#/components/schemas/ResponseError"
 
-
   /service/create:
     post:
       summary: Criar um novo servico
@@ -33,3 +32,109 @@ paths:
           application/json:
             schemas:
               type: object
+              $ref: "#/components/schemas/createService"
+      Responses:
+        "200":
+          description: Serviço criado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResponseSucess"
+        "400":
+          description: Serviço criado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResposeError"
+
+  /service/get-by-id/{id}:
+    get:
+      summary: Buscar um serviço por ID
+      description: Retomar um serviço especifico pelo ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do utilizador
+          schema:
+            type: integer
+            example: 1
+      Response:
+        "200":
+          description: Serviço encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/Servico"
+        "404":
+          description: Servico não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResposeError"
+
+  /service/update/{id}:
+    put:
+      summary: Atualizar um serviço
+      description: Atualiza um serviço especifico pelo ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do serviço a ser atualizado
+          schema:
+            type: integer
+            example: 1
+      RequestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: "#/components/schemas/CreateService"
+      Responses:
+        "200":
+          description: Dados invalidos
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResponseSuccess"
+        "404":
+          description: Serviço não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResposeError"
+  /service/delete/{id}:
+    delete:
+      summary: Apagar um serviço
+      description: Apagar um serviço especifico pelo ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do serviço a ser apagado
+          schema:
+            type: integer
+            example: 1
+      responses:
+        "200":
+          description: Serviço apagado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResponseSuccess"
+        "404":
+          description: Serviço não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResposeError"

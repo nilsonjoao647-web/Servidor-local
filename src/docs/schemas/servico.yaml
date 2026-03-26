@@ -22,7 +22,7 @@ components:
           example: "Serviço de Limpeza"
         descricao:
           type: string
-          example: "Serviço de limpeza profissional para residênçia e "
+          example: "Serviço de limpeza profissional para residênçia"
         categoria:
           type: string
           example: "Limpeza"
@@ -36,6 +36,37 @@ components:
           type: string
           example: "2022-01-01T00:00:00.0002"
 
+    #schema para criar um novo serviço
+    CreateService:
+      type: object
+      properties:
+        nome:
+          type: string
+          example: Serviço de limpeza
+        descricao:
+          type: string
+          example: "Servico de limpeza profissional para residêcia e empresa "
+        categoria:
+          type: string
+          example: "Limpeza"
+        enabled:
+          type: "booleean"
+          example: true
+
+    # schema generico para sucesso
+    ResponseSucess:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "servico criado com sucesso"
+        status:
+          type: boolean
+          example: true
+        data:
+          type: object
+          $ref: "#/components/schemas/Servico"
+
     #schema generico de resposta de erro
     ResponseError:
       type: object
@@ -46,4 +77,4 @@ components:
         status:
           type: boolean
           properties:
-            null
+            null:
