@@ -1,0 +1,80 @@
+# schema/prestacao de servico.yaml
+
+    #id: string,
+    #nome: string,
+    #descricao: string,
+    #categoria: string,
+    #enabled: boolean;
+    #created_at: string,
+    #updated_at: string
+
+components:
+  schemas:
+  # schema principal de prestacao de servico
+    Prestacao de servico:
+      type: object
+      properties:
+        id:
+          type: integer
+          exemple: 1
+        nome:
+          type: string
+          example: "Prestacao de servico de Limpeza"
+        descricao:
+          type: string
+          example: "Prestacao de servico de limpeza profissional para residênçia"
+        categoria:
+          type: string
+          example: "Limpeza"
+        enabled:
+          type: "booleean"
+          example: true
+        created_at:
+          type: string
+          example: "2022-01-01T00:00:00.0002"
+        updated_at:
+          type: string
+          example: "2022-01-01T00:00:00.0002"
+
+    #schema para criar um novo prestacao de servico
+    CreateService:
+      type: object
+      properties:
+        nome:
+          type: string
+          example: Prestacao de servico de limpeza
+        descricao:
+          type: string
+          example: "Prestacao de servico de limpeza profissional para residêcia e empresa "
+        categoria:
+          type: string
+          example: "Limpeza"
+        enabled:
+          type: "booleean"
+          example: true
+
+    # schema generico para sucesso
+    ResponseSucess:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "prestacao de servico criado com sucesso"
+        status:
+          type: boolean
+          example: true
+        data:
+          type: object
+          $ref: "#/components/schemas/Prestacao de servico"
+
+    #schema generico de resposta de erro
+    ResponseError:
+      type: object
+      properties:
+        message:
+          type: string
+          exemple: "Erro ao buscar prestacao de servico"
+        status:
+          type: boolean
+          properties:
+            null:

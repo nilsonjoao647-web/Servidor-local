@@ -3,7 +3,7 @@ import swaggerJsdoc from "swagger-jsdoc"
 
 const option: swaggerJsdoc.Options = {
     definition: {
-        openapi: " 3.0.0",
+        openapi: "3.0.0",
         info: {
             title: "API Servidor Local",
             description: "Plataformaa de Gestão de Prestadores e Serviços",
@@ -17,8 +17,8 @@ const option: swaggerJsdoc.Options = {
         ]
     },
     apis: [
-        path.join(process.cwd(), "./src/doc/schemas/*.yaml"),
-        path.join(process.cwd(), "./src/doc/paths/*.yaml"),
+        path.join(process.cwd(), "./src/docs/schemas/*.yaml"),
+        path.join(process.cwd(), "./src/docs/paths/*.yaml"),
     ]
 }
 

@@ -1,0 +1,80 @@
+# schema/proposta.yaml
+
+    #id: string,
+    #nome: string,
+    #descricao: string,
+    #categoria: string,
+    #enabled: boolean;
+    #created_at: string,
+    #updated_at: string
+
+components:
+  schemas:
+  # schema principal de proposta
+    Proposta:
+      type: object
+      properties:
+        id:
+          type: integer
+          exemple: 1
+        nome:
+          type: string
+          example: "Proposta de Limpeza"
+        descricao:
+          type: string
+          example: "Proposta de limpeza profissional para residênçia"
+        categoria:
+          type: string
+          example: "Limpeza"
+        enabled:
+          type: "booleean"
+          example: true
+        created_at:
+          type: string
+          example: "2022-01-01T00:00:00.0002"
+        updated_at:
+          type: string
+          example: "2022-01-01T00:00:00.0002"
+
+    #schema para criar um novo proposta
+    CreateService:
+      type: object
+      properties:
+        nome:
+          type: string
+          example: Proposta de limpeza
+        descricao:
+          type: string
+          example: "Proposta de limpeza profissional para residêcia e empresa "
+        categoria:
+          type: string
+          example: "Limpeza"
+        enabled:
+          type: "booleean"
+          example: true
+
+    # schema generico para sucesso
+    ResponseSucess:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "proposta criado com sucesso"
+        status:
+          type: boolean
+          example: true
+        data:
+          type: object
+          $ref: "#/components/schemas/Proposta"
+
+    #schema generico de resposta de erro
+    ResponseError:
+      type: object
+      properties:
+        message:
+          type: string
+          exemple: "Erro ao buscar proposta"
+        status:
+          type: boolean
+          properties:
+            null:

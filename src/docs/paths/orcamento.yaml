@@ -1,23 +1,23 @@
-# paths/servico.yaml
+# paths/orcamento.yaml
 
 paths:
-  /servico:
+  /orcamento:
     get:
-      summary: listar todos os serviços
+      summary: listar todos os orcamento
       tags:
-        -Servico
-      description: Retomar uma lista de todos os serviços disponíveis
+        -Orcamento
+      description: Retomar uma lista de todos os orcamento disponíveis
     response:
       "200":
-        description: Lista de serviços
+        description: Lista de orcamento
         content:
           application/json:
             schema:
               type: array
               items:
-                $ref: "#/components/schemas/Servico"
+                $ref: "#/components/schemas/Orcamento"
         "404":
-          description: "Nenhum serciço encontrado"
+          description: "Nenhum orcamento encontrado"
           content:
             application/json:
               schema:
@@ -26,10 +26,10 @@ paths:
 
   /service/create:
     post:
-      summary: Criar um novo servico
+      summary: Criar um novo orcamento
       tags:
-        -Servico
-      description: Criar um novo servico
+        -Orcamento
+      description: Criar um novo orcamento
       requestBody:
         required: true
         content:
@@ -39,14 +39,14 @@ paths:
               $ref: "#/components/schemas/createService"
       Responses:
         "200":
-          description: Serviço criado com sucesso
+          description: Orcamento criado com sucesso
           content:
             application/json:
               schema:
                 type: object
                 $ref: "#/components/schemas/ResponseSucess"
         "400":
-          description: Serviço criado com sucesso
+          description: Orcamento criado com sucesso
           content:
             application/json:
               schema:
@@ -55,10 +55,10 @@ paths:
 
   /service/get-by-id/{id}:
     get:
-      summary: Buscar um serviço por ID
+      summary: Buscar um orcamento por ID
       tags:
-        -Servico
-      description: Retomar um serviço especifico pelo ID
+        -Orcamento
+      description: Retomar um orcamento especifico pelo ID
       parameters:
         - name: id
           in: path
@@ -69,14 +69,14 @@ paths:
             example: 1
       Response:
         "200":
-          description: Serviço encontrado
+          description: Orcamento encontrado
           content:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/Servico"
+                $ref: "#/components/schemas/Orcamento"
         "404":
-          description: Servico não encontrado
+          description: Orcamento não encontrado
           content:
             application/json:
               schema:
@@ -85,15 +85,15 @@ paths:
 
   /service/update/{id}:
     put:
-      summary: Atualizar um serviço
+      summary: Atualizar um orcamento
       tags:
-        -Servico
-      description: Atualiza um serviço especifico pelo ID
+        -Orcamento
+      description: Atualiza um orcamento especifico pelo ID
       parameters:
         - name: id
           in: path
           required: true
-          description: ID do serviço a ser atualizado
+          description: ID do orcamento a ser atualizado
           schema:
             type: integer
             example: 1
@@ -113,7 +113,7 @@ paths:
                 type: object
                 $ref: "#/components/schemas/ResponseSuccess"
         "404":
-          description: Serviço não encontrado
+          description: Orcamento não encontrado
           content:
             application/json:
               schema:
@@ -122,28 +122,28 @@ paths:
 
   /service/delete/{id}:
     delete:
-      summary: Apagar um serviço
+      summary: Apagar um orcamento
       tags:
-        -Servico
-      description: Apagar um serviço especifico pelo ID
+        -Orcamento
+      description: Apagar um orcamento especifico pelo ID
       parameters:
         - name: id
           in: path
           required: true
-          description: ID do serviço a ser apagado
+          description: ID do orcamento a ser apagado
           schema:
             type: integer
             example: 1
       responses:
         "200":
-          description: Serviço apagado com sucesso
+          description: Orcamento apagado com sucesso
           content:
             application/json:
               schema:
                 type: object
                 $ref: "#/components/schemas/ResponseSuccess"
         "404":
-          description: Serviço não encontrado
+          description: Orcamento não encontrado
           content:
             application/json:
               schema:
