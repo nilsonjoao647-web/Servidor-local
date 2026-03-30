@@ -1,6 +1,8 @@
-import {  UserModel } from "../models/users.model.js"
+import { UserModel } from "../models/users.model.js"
 import type { userType } from "../utils/types.js"
 import type { Request, Response } from "express"
+import { comparePassword } from "../utils/password.js"
+import  jwt  from "jsonwebtoken"
 
 export const UserController = {
     async createUser(req: Request, res: Response) {
@@ -11,17 +13,17 @@ export const UserController = {
                 error: "utilizador nao encontrado",
             })
         }
-            const createUserResponse = await UserModel.create(user);
-            res.json(createUserResponse)
+        const createUserResponse = await UserModel.create(user);
+        res.json(createUserResponse)
     },
 
-async allUsers(req: Request, res: Response) {
-    const getUserResponse = await UserModel.allUser()
+    async allUsers(req: Request, res: Response) {
+        const getUserResponse = await UserModel.allUser()
 
         res.json(getUserResponse);
-},
+    },
 
-async get(req: Request, res: Response) {
+    async get(req: Request, res: Response) {
         const id = req.params.id
 
         if (!id) {
@@ -111,5 +113,46 @@ async get(req: Request, res: Response) {
             message: "Servico apagado com success",
             data: deleteServicoResponse
         })
-    }
+    },
+
+    async login(req: Request, res: Response) {
+        const { email, password } = req.body
+
+        if (!email || !password) {
+            return res.status(400).json({
+                status: "error",
+                message: "Credenciais invalidos",
+                data: null
+            })
+        }
+
+        const userData = await UserModel.getByEmail(email as string)
+
+        if (!userData) {
+            return res.status(404).json({
+                status: "error",
+                message: "Nao existe nenhuma conta com esse email",
+                data: null
+            })
+        }
+
+        const isPasswordValid = await comparePassword(password, userData.password)
+
+        if (!isPasswordValid) {
+            return res.status(401).json({
+                status: "error",
+                message: "Credenciais invalidos",
+                data: null
+            })
+        }
+
+        const playload = {
+            id: userData.id,
+            email: userData.email,
+            nome: userData.nome
+        }
+
+        const token = jwt.sign(playload, process.env.JWT_SECRET as string, {expiresIn: "1h"})
+        
+    },
 }
