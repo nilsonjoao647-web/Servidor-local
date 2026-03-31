@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="style.css">
+
+    
+</head>
+
+<body>
+
+    <div class="navbar">
+
+        <!-- ESQUERDA -->
+        <div class="nav-left">
+            <a href="index.html">Início</a>
+            <a href="operacoes.html">Operações</a>
+            <a href="treinamento.html">Treinamento</a>
+        </div>
+
+        <!-- CENTRO -->
+        <div class="nav-center">
+            <img src="images/fz.webp" alt="Logo">
+            <span>Fuzileiros Navais de Cabo Verde</span>
+        </div>
+
+        <!-- DIREITA -->
+        <div class="nav-right">
+            <a href="galeria.html">Galeria</a>
+            <a href="noticias.html">Notícias</a>
+            <a href="contacto.html">Contato</a>
+        </div>
+
+    </div>
+
+        
+    
+    <!-- CONTEÚDO -->
+    <div class="container">
+        <h1>Contacto Oficial</h1>
+
+        <div class="grid">
+
+            <!-- INFORMAÇÕES -->
+            <div class="box info">
+                <h2>Informações</h2>
+
+                <a href="tel:5868933"> <img src="images/chamada-telefonica.png" alt="" width="50" height="50"> Telefone: 5868933</a>
+
+                <a href="https://instagram.com/pilotonavalfz" target="_blank">
+                    <img src="images/instagram (1).png" alt="" width="50" height="50"> Instagram: @pilotonavalfz
+                </a>
+
+                <a href="https://facebook.com/" target="_blank">
+                    <img src="images/facebook.png" alt="" width="50" height="50"> Facebook: Piloto Naval Fz
+                </a>
+
+                <p style="margin-top:20px; color:#aaa;">
+                    Entre em contacto connosco para informações, operações ou suporte.
+                </p>
+            </div>
+
+            <!-- FORMULÁRIO -->
+            <div class="box">
+                <h2>Enviar Mensagem</h2>
+
+                <form id="form">
+                    <input type="text" id="nome" placeholder="Nome completo" required>
+                    <input type="email" id="email" placeholder="Email" required>
+                    <textarea id="mensagem" rows="5" placeholder="Escreva sua mensagem..." required></textarea>
+
+                    <button type="submit">Enviar</button>
+                </form>
+
+                <div class="success" id="sucesso">
+                    ✔ Mensagem enviada com sucesso!
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SCRIPT -->
+    <script>
+        const form = document.getElementById("form");
+        const sucesso = document.getElementById("sucesso");
+
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const nome = document.getElementById("nome").value;
+            const email = document.getElementById("email").value;
+            const mensagem = document.getElementById("mensagem").value;
+
+            console.log({ nome, email, mensagem });
+
+            sucesso.style.display = "block";
+
+            form.reset();
+        });
+    </script>
+
+</body>
+
+<footer >
+    © 2026 Fuzileiros Navais de Cabo Verde • Todos os direitos reservados
+</footer>
+
+</html>

@@ -120,8 +120,3 @@ export async function deleteUser(id: string) {
         return null
     }
 }
-
-
-
-
-

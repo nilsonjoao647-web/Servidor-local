@@ -53,6 +53,16 @@ components:
           type: "booleean"
           example: true
 
+          LoginUser:
+            type: object
+            properties:
+              email:
+                type: string
+                example: "user@example.com"
+              password:
+                type: string
+                example: "senha123"
+
     # schema generico para sucesso
     ResponseSucess:
       type: object
