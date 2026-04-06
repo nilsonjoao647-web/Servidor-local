@@ -1,5 +1,6 @@
 import db from "../lib/db.js"
-import type { orcamentoType } from "../utils/types.js"
+import type { calcularOrcamento } from "../orcamneto.js"
+import type { orcamentoType, prestacao_servicoType, propostaType } from "../utils/types.js"
 
 export const orcamentoModel = {
     async create(neworcamento: orcamentoType) {
@@ -102,5 +103,22 @@ export const orcamentoModel = {
         }
     },
 
+    async getPrestacaoDeServico(id: string) {
+        try {
+            const query = 'SELECT * FROM tbl_prestacao_servico WHERE id = ?'
 
+            const value = [id]
+
+            const rows = await db.execute(query, value)
+
+            return Array.isArray(rows) && rows.length > 0 ? rows[0] : null
+
+        } catch (error) {
+            console.log(error)
+            return null
+        }
+
+    }
 }
+
+
