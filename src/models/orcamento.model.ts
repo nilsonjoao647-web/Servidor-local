@@ -1,6 +1,6 @@
 import db from "../lib/db.js"
 import type { calcularOrcamento } from "../orcamneto.js"
-import type { orcamentoType, prestacao_servicoType, propostaType } from "../utils/types.js"
+import type { orcamentoType, prestacaoServicoType, propostaType } from "../utils/types.js"
 
 export const orcamentoModel = {
     async create(neworcamento: orcamentoType) {
@@ -47,7 +47,7 @@ export const orcamentoModel = {
 
             const value = [id]
 
-            const rows = db.execute(query, value)
+            const rows = await db.execute(query, value)
 
             return Array.isArray(rows) && rows.length > 0 ? rows[0] : null
 
@@ -61,27 +61,41 @@ export const orcamentoModel = {
         try {
             const query = `UPDATE tbl_orcamento
                         SET
-                            nome=?,
-                            descricao=?,
-                            categoria=?,
-                            enabled=?,
-                            updated_at=?,
-                        WERE
-                            id=?
-                        ;`
+                            total = ?,
+                            id_utilizadores = ?,
+                            enabled = ?,
+                            updated_at = ?
+                        WHERE
+                            id = ?`
 
             const values = [
                 orcamentoAtualizado.total,
                 orcamentoAtualizado.id_utilizadores,
                 orcamentoAtualizado.enabled,
-                orcamentoAtualizado.created_at,
-                orcamentoAtualizado.update_at,
                 new Date(),
                 id
             ]
 
-            const rows = await db.execute(query, values)
+            const rows: any = await db.execute(query, values)
+            return rows[0]?.affectedRows === 0 ? null : rows
+        } catch (error) {
+            console.log(error)
+            return null
+        }
+    },
 
+    async updateBudget(id: string, total: number) {
+        try {
+            const query = `UPDATE tbl_orcamento
+                        SET
+                            total = ?,
+                            updated_at = ?
+                        WHERE
+                            id = ?`
+
+            const values = [total, new Date(), id]
+            const rows: any = await db.execute(query, values)
+            return rows[0]?.affectedRows === 0 ? null : rows
         } catch (error) {
             console.log(error)
             return null
@@ -105,7 +119,7 @@ export const orcamentoModel = {
 
     async getPrestacaoDeServico(id: string) {
         try {
-            const query = 'SELECT * FROM tbl_prestacao_servico WHERE id = ?'
+            const query = 'SELECT * FROM tbl_prestacaoServico WHERE id = ?'
 
             const value = [id]
 

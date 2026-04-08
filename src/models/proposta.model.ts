@@ -1,6 +1,7 @@
 import type { create } from "node:domain";
 import db from "../lib/db.js";
-import type { propostaType } from "../utils/types.js";
+import type { PropostaDBType, propostaType } from "../utils/types.js";
+import type { RowDataPacket } from "mysql2";
 
 export const PropostaModel = {
     async createProposta(newProposta: propostaType) {
@@ -92,18 +93,43 @@ export const PropostaModel = {
 
     async deleteProposta(id: string) {
         try {
-        const query = `DELETE FROM  tbl_Proposta WHERE id =?`
+            const query = `DELETE FROM  tbl_Proposta WHERE id =?`
 
-        const value = [id]
+            const value = [id]
 
-        const rows: any = await db.execute(query, value)
+            const rows: any = await db.execute(query, value)
 
             return rows[0]?.affectedRows === 0 ? null : rows
-    } catch (error) {
-        console.log(error)
-        return null
-    }
+        } catch (error) {
+            console.log(error)
+            return null
+        }
     },
 
+    async getByIdPrestacaoServico(idPrestacaoServico: string): Promise<PropostaDBType[] | null> {
+        try {
+            const [rows] = await db.execute<PropostaDBType[] & RowDataPacket[]>(
+                `SELECT * FROM tbl_proposta
+                WHERE id_prestacao_servico = ?`,
+                [idPrestacaoServico]
+            )
 
+            if (!Array.isArray(rows) || rows.length === 0) return null
+            return rows
+        } catch (err) {
+            console.log(err)
+            return null
+        }
+    },
+
+    async acceptProposal (id: string) {
+        try {
+            const [rows] = await db.execute(
+                `UPDATE tbl_propostas`
+            )
+        }catch (err) {
+            console.log(err)
+            return null
+        }
+    }
 }

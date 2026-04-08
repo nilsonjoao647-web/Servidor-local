@@ -1,23 +1,25 @@
+import type { promises } from "node:dns"
 import db from "../lib/db.js"
-import type { prestacao_servicoType } from "../utils/types.js"
+import type { prestacaoServicoType } from "../utils/types.js"
+import type { RowDataPacket } from "mysql2"
 
-export const prestacaoservicoModel = {
-    async create(newprestacaoservico: prestacao_servicoType) {
+export const prestacaoServicoModel = {
+    async create(newprestacaoServico: prestacaoServicoType) {
         try {
-            const query = 'INSERT INTO table_prestacao_servico VALUES (?, ?, ?, ?, ?, ?, ?)'
+            const query = 'INSERT INTO table_prestacaoServico VALUES (?, ?, ?, ?, ?, ?, ?)'
 
             const values = [
                 null,
-                newprestacaoservico.designacao,
-                newprestacaoservico.subtotal,
-                newprestacaoservico.horas_estimadas,
-                newprestacaoservico.id_prestador,
-                newprestacaoservico.preco_hora,
-                newprestacaoservico.estado,
-                newprestacaoservico.id_orcamento,
-                newprestacaoservico.enabled,
-                newprestacaoservico.created_at,
-                newprestacaoservico.update_at,
+                newprestacaoServico.designacao,
+                newprestacaoServico.subtotal,
+                newprestacaoServico.horas_estimadas,
+                newprestacaoServico.id_prestador,
+                newprestacaoServico.preco_hora,
+                newprestacaoServico.estado,
+                newprestacaoServico.id_orcamento,
+                newprestacaoServico.enabled,
+                newprestacaoServico.created_at,
+                newprestacaoServico.update_at,
                 new Date(),
                 new Date()
             ]
@@ -33,7 +35,7 @@ export const prestacaoservicoModel = {
 
     async getAll() {
         try {
-            const query = 'SELECT * FROM tbl_prestacao_servico'
+            const query = 'SELECT * FROM tbl_prestacaoServico'
 
             const rows = await db.execute(query)
 
@@ -47,7 +49,7 @@ export const prestacaoservicoModel = {
 
     async get(id: string) {
         try {
-            const query = 'SELECT * FROM tbl_prestacao_servico WHERE id = ?'
+            const query = 'SELECT * FROM tbl_prestacaoServico WHERE id = ?'
 
             const value = [id]
 
@@ -61,9 +63,9 @@ export const prestacaoservicoModel = {
         }
     },
 
-    async update(id: string, prestacaoservicoAtualizado: prestacao_servicoType) {
+    async update(id: string, prestacaoServicoAtualizado: prestacaoServicoType) {
         try {
-            const query = `UPDATE tbl_prestacaoservico
+            const query = `UPDATE tbl_prestacaoServico
                         SET
                             nome=?,
                             descricao=?,
@@ -75,16 +77,16 @@ export const prestacaoservicoModel = {
                         ;`
 
             const values = [
-                prestacaoservicoAtualizado.designacao,
-                prestacaoservicoAtualizado.subtotal,
-                prestacaoservicoAtualizado.horas_estimadas,
-                prestacaoservicoAtualizado.id_prestador,
-                prestacaoservicoAtualizado.preco_hora,
-                prestacaoservicoAtualizado.estado,
-                prestacaoservicoAtualizado.id_orcamento,
-                prestacaoservicoAtualizado.enabled,
-                prestacaoservicoAtualizado.created_at,
-                prestacaoservicoAtualizado.update_at,
+                prestacaoServicoAtualizado.designacao,
+                prestacaoServicoAtualizado.subtotal,
+                prestacaoServicoAtualizado.horas_estimadas,
+                prestacaoServicoAtualizado.id_prestador,
+                prestacaoServicoAtualizado.preco_hora,
+                prestacaoServicoAtualizado.estado,
+                prestacaoServicoAtualizado.id_orcamento,
+                prestacaoServicoAtualizado.enabled,
+                prestacaoServicoAtualizado.created_at,
+                prestacaoServicoAtualizado.update_at,
                 new Date(),
                 id
             ]
@@ -99,7 +101,7 @@ export const prestacaoservicoModel = {
 
     async delete(id: string) {
         try {
-            const query = `DELETE FROM  tbl_prestacaoservico WHERE id =?`
+            const query = `DELETE FROM  tbl_prestacaoServico WHERE id =?`
 
             const value = [id]
 
@@ -112,5 +114,24 @@ export const prestacaoservicoModel = {
         }
     },
 
+    async getByIdOrcamento(idOrcamento: string): Promise<prestacaoServicoType | null> {
+        try {
+
+
+            const [rows] = await db.execute<prestacaoServicoType[] & RowDataPacket[]>(
+                `SELECT * FROM tbl_prestacao_servico
+            WHERE tbl_prestacao_servico.id_orcamento =?`,
+
+                [idOrcamento]
+            )
+
+            if (Array.isArray(rows) && rows.length === 0) return null
+
+            return Array.isArray(rows) ? rows[0] as prestacaoServicoType : null
+        } catch (err) {
+            console.log(err)
+            return null
+        }
+    }
 
 }

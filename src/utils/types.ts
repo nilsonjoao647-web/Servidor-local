@@ -59,21 +59,6 @@ export interface ServicoDBType {
     updated_at: string
 }
 
-export interface UserType {
-    id: string,
-    nome: string,
-    numero_identificado: string,
-    data_nascimento: string,
-    email: string,
-    telefone: string,
-    pais: string,
-    localidade: string,
-    password: string;
-    enabled: boolean;
-    created_at: string;
-    updated_at: string
-}
-
 export interface userType {
     id: string,
     nome: string,
@@ -111,17 +96,6 @@ export interface propostaType {
 export interface prestadorType {
     id: string,
     nif: number,
-    taxa_urgencia: string,
-    minimo_desconto: string,
-    percentagem_desconto: string,
-    disponivel: string,
-    created_at: string,
-    update_at: string
-}
-
-export interface prestadorType {
-    id: string,
-    nif: number,
     profissao: string,
     taxa_urgencia: string,
     minimo_desconto: string,
@@ -132,7 +106,7 @@ export interface prestadorType {
     update_at: string
 }
 
-export interface prestacao_servicoType {
+export interface prestacaoServicoType {
     id: string,
     designacao: string,
     subtotal: string,
@@ -145,4 +119,28 @@ export interface prestacao_servicoType {
     enabled: boolean,
     created_at: string,
     update_at: string
+}
+
+export interface PropostaDBType {
+    id: string,
+    id_prestacao_servico: string,
+    preco_hora: number | string,
+    hora_estimadas?: number | string,
+    estado: string | number,
+    enabled: boolean,
+    created_at: string,
+    update_at: string
+}
+
+export enum EstadoProposta {
+    PENDENTE = "pendente",
+    ACEITE = "aceite",
+    CANCELADO = "cancelado"
+}
+
+export enum EstadoPrestacaoServico {
+    PENDENTE = "pendente",
+    FINALIZADO = "finalizado",
+    EM_PROGRESSO = "em_progresso",
+    CANCELADO = "cancelado"
 }
