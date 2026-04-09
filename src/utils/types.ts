@@ -19,12 +19,6 @@ export interface ServicoType {
     percentagemDeconto: number
 }
 
-export interface ResponseType {
-    status: boolean,
-    message: string,
-    data: ServicoType | null,
-}
-
 export interface AlunosType {
     nome: string;
     endereco: string;
@@ -74,7 +68,7 @@ export interface userType {
     updated_at: string
 }
 
-export interface orcamentoType {
+export interface orcamentoDBType {
     id: string,
     total: string,
     id_utilizadores: string,
@@ -124,6 +118,7 @@ export interface prestacaoServicoType {
 export interface PropostaDBType {
     id: string,
     id_prestacao_servico: string,
+    idPrestador: string,
     preco_hora: number | string,
     hora_estimadas?: number | string,
     estado: string | number,
@@ -143,4 +138,48 @@ export enum EstadoPrestacaoServico {
     FINALIZADO = "finalizado",
     EM_PROGRESSO = "em_progresso",
     CANCELADO = "cancelado"
+}
+
+export interface prestadorDBType {
+    id: string,
+    taxa_urgencia: number,
+    percentagemDesconto: number,
+    minimoDesconto: number,
+    nif: string,
+    profissao: string,
+    enabled: boolean,
+    created_at: string,
+    update_at: string
+}
+
+export interface prestacaoServicoDBType {
+    id: string,
+    designacao: string,
+    subtotal: string,
+    urgente: boolean,
+    horasestimadas: string,
+    id_prestador: string,
+    id_servico: string, 
+    preco_hora: string,
+    id_utilizadores:string,
+    id_orcamento: string,
+    enabled: boolean,
+    created_at: string,
+    update_at: string
+}
+
+export interface PrestadorServicoDetalhadoType{
+    id: string,
+    nome_utilizador: string,
+    email_utilizador: string,
+    nome_servico: string,
+    descricao: string,
+    data_pedido: string,
+    urgente: boolean
+}
+
+export interface responseType <T> {
+    status: "success" | "error",
+    message: string,
+    data: T | null
 }

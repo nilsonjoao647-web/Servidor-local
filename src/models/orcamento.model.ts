@@ -1,9 +1,9 @@
 import db from "../lib/db.js"
 import type { calcularOrcamento } from "../orcamneto.js"
-import type { orcamentoType, prestacaoServicoType, propostaType } from "../utils/types.js"
+import type { orcamentoDBType, prestacaoServicoType, propostaType } from "../utils/types.js"
 
 export const orcamentoModel = {
-    async create(neworcamento: orcamentoType) {
+    async create(neworcamento: orcamentoDBType) {
         try {
             const query = 'INSERT INTO table_orcamento VALUES (?, ?, ?, ?, ?, ?, ?)'
 
@@ -57,7 +57,7 @@ export const orcamentoModel = {
         }
     },
 
-    async update(id: string, orcamentoAtualizado: orcamentoType) {
+    async update(id: string, orcamentoAtualizado: orcamentoDBType) {
         try {
             const query = `UPDATE tbl_orcamento
                         SET
@@ -132,7 +132,23 @@ export const orcamentoModel = {
             return null
         }
 
+    },
+
+    async updateBuget(id: string, total: number) {
+        try {
+            const rows: any = await db.execute(
+                `UPDATE tbl_orcamento SET total = ?, update_at = ? WHERE id = ?`,
+                [total, new Date(), id]
+            )
+
+            return rows[0].affectedRows === 0 ? null : rows[0]
+        }
+        catch (err) {
+            console.log(err)
+            return null
+        }
     }
+
 }
 
 

@@ -1,5 +1,5 @@
 import type { Request, Response } from "express"
-import type { orcamentoType, PropostaDBType } from "../utils/types.js"
+import type { orcamentoDBType, PropostaDBType, responseType } from "../utils/types.js"
 import { orcamentoModel } from "../models/orcamento.model.js"
 import { prestacaoServicoModel } from "../models/prestacao_servico.model.js"
 import { PropostaModel } from "../models/proposta.model.js"
@@ -7,7 +7,7 @@ import { PrestadorModel } from "../models/prestador.model.js"
 
 export const OrcamentoController = {
     async createOrcamento(req: Request, res: Response) {
-        const neworcamento: orcamentoType = req.body
+        const neworcamento: orcamentoDBType = req.body
 
         if (!neworcamento) {
             return res.status(400).json({
@@ -77,7 +77,7 @@ export const OrcamentoController = {
 
     async updateOrcamento(req: Request, res: Response) {
         const { id } = req.params
-        const updatedOrcamento: orcamentoType = req.body
+        const updatedOrcamento: orcamentoDBType = req.body
 
         if (!id) {
             return res.status(400).json({
@@ -152,11 +152,12 @@ export const OrcamentoController = {
 
         const prestacaoServico = await prestacaoServicoModel.getByIdOrcamento(id as string)
         if (!prestacaoServico) {
-            return res.status(404).json({
+            const response: responseType<null> = {
                 status: "error",
                 message: "Prestacao de servico nao encontrada",
                 data: null
-            })
+            }
+            return res.status(404).json(response)
         }
 
         const propostas = await PropostaModel.getByIdPrestacaoServico(prestacaoServico.id)
@@ -218,11 +219,12 @@ export const OrcamentoController = {
             })
         }
 
-        return res.status(200).json({
+        const response: responseType<orcamentoDBType> = {
             status: "success",
             message: "Orcamento calculado e atualizado com sucesso",
             data: updateOrcamentoResponse
-        })
+        }
+        return res.status(200).json(response)
     },
 
     async calcular(req: Request, res: Response) {

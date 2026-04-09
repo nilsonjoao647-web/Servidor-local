@@ -1,6 +1,6 @@
 import type { promises } from "node:dns"
 import db from "../lib/db.js"
-import type { prestacaoServicoType } from "../utils/types.js"
+import type { PrestadorServicoDetalhadoType,  prestacaoServicoType } from "../utils/types.js"
 import type { RowDataPacket } from "mysql2"
 
 export const prestacaoServicoModel = {
@@ -128,6 +128,40 @@ export const prestacaoServicoModel = {
             if (Array.isArray(rows) && rows.length === 0) return null
 
             return Array.isArray(rows) ? rows[0] as prestacaoServicoType : null
+        } catch (err) {
+            console.log(err)
+            return null
+        }
+    },
+
+    async getAllPrestacaoServicoDetalhada(limit: number, offset: number) {
+        try {
+            const query = `
+            SELECT
+                ps.id as id_prestacao_servico,
+                ps.designacao as descricao,
+                u.nome as nome_utilizador,
+                u.imail as imail_utilizador,
+                s.nome as nome_servico,
+                ps.created_at as data_pedido,
+                ps.urgente
+            FROM tbl_prestacao_servico ps
+            INNER JOIN tbl_utilizadores u ON ps.id_utilizador = u.id
+            INNER JOIN tbl_servico s ON ps.id_servico = s.id
+            ORDER BY ps.created_at DESC
+            LIMIT ? OFFSET ?
+            `
+
+            const [rows] = await db.execute<PrestadorServicoDetalhadoType[] & RowDataPacket[]>(
+                query,
+                [
+                    limit.toString(),
+                    offset.toString()
+                ]
+            )
+
+            if (Array.isArray(rows) && rows.length === 0) return null
+            return Array.isArray(rows) ? rows as PrestadorServicoDetalhadoType[] : null
         } catch (err) {
             console.log(err)
             return null
