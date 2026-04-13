@@ -183,3 +183,14 @@ export interface responseType <T> {
     message: string,
     data: T | null
 }
+
+export interface ServicoDetalhadoType{
+    id: string,
+    nome: string,
+    descricao: string,
+    desgnacao_categoria: string,
+    icone_categoria: string,
+    id_empresa: string,
+    designacao_empresa: string,
+    
+}

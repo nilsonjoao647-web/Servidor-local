@@ -1,10 +1,10 @@
 import type {Request, Response} from "express"
-import type { prestacao_servicoType } from "../utils/types.js"
-import { prestacaoservicoModel } from "../models/prestacao_servico.model.js"
+import type { prestacaoServicoType } from "../utils/types.js"
+import { prestacaoServicoModel } from "../models/prestacao_servico.model.js"
 
 export const PrestacaoServicoController = {
-    async createPrestacaoServico (req: Request, res: Response) {
-        const newPrestacaoServico: prestacao_servicoType = req.body
+    async create (req: Request, res: Response) {
+        const newPrestacaoServico: prestacaoServicoType = req.body
         
                 if (!newPrestacaoServico) {
                     return res.status(400).json({
@@ -14,7 +14,7 @@ export const PrestacaoServicoController = {
                     })
                 }
         
-                const createPrestacaoServicoResponse = await prestacaoservicoModel.create(newPrestacaoServico)
+                const createPrestacaoServicoResponse = await prestacaoServicoModel.create(newPrestacaoServico)
                 if (createPrestacaoServicoResponse) {
                     return res.status(400).json({
                         status: "error",
@@ -29,8 +29,8 @@ export const PrestacaoServicoController = {
                 })
     },
 
-    async getAllPrestacaoServico(req: Request, res: Response) {
-            const getAllPrestacaoServicoResponse = await prestacaoservicoModel.getAll()
+    async getAll(req: Request, res: Response) {
+            const getAllPrestacaoServicoResponse = await prestacaoServicoModel.getAll()
             if (!getAllPrestacaoServicoResponse) {
                 return res.status(500).json({
                     status: "error",
@@ -45,7 +45,7 @@ export const PrestacaoServicoController = {
             })
         },
     
-        async getPrestacaoServico(req: Request, res: Response) {
+        async get(req: Request, res: Response) {
             const id = req.params.id
     
             if (!id) {
@@ -56,7 +56,7 @@ export const PrestacaoServicoController = {
                 })
             }
     
-            const getAllPrestacaoServicoResponse = await prestacaoservicoModel.get(id as string)
+            const getAllPrestacaoServicoResponse = await prestacaoServicoModel.get(id as string)
             if (!getAllPrestacaoServicoResponse) {
                 return res.status(400).json({
                     status: "error",
@@ -71,10 +71,10 @@ export const PrestacaoServicoController = {
             })
         },
     
-        async updatePrestacaoServico(req: Request, res: Response) {
+        async update(req: Request, res: Response) {
             const { id } = req.params
     
-            const updatedPrestacaoServico: prestacao_servicoType = req.body
+            const updatedPrestacaoServico: prestacaoServicoType = req.body
     
             if (!id) {
                 return res.status(400).json({
@@ -92,7 +92,7 @@ export const PrestacaoServicoController = {
                 })
             }
     
-            const updatedServicoResponse = await prestacaoservicoModel.update(id as string, updatedPrestacaoServico)
+            const updatedServicoResponse = await prestacaoServicoModel.update(id as string, updatedPrestacaoServico)
     
             if (!updatedServicoResponse) {
                 return res.status(400).json({
@@ -110,7 +110,7 @@ export const PrestacaoServicoController = {
             })
         },
     
-        async deletePrestacaoServico(req: Request, res: Response) {
+        async delete(req: Request, res: Response) {
             const { id } = req.params
     
             if (!id) {
@@ -121,7 +121,7 @@ export const PrestacaoServicoController = {
                 })
             }
     
-            const deletePrestacaoServicoResponse = await prestacaoservicoModel.delete(id as string)
+            const deletePrestacaoServicoResponse = await prestacaoServicoModel.delete(id as string)
             if (!deletePrestacaoServicoResponse) {
                 return res.status(400).json({
                     status: "error",
@@ -135,5 +135,31 @@ export const PrestacaoServicoController = {
                 message: "PrestacaoServico apagado com success",
                 data: deletePrestacaoServicoResponse
             })
+        },
+
+        async getAllPrestacaoServicoDetalhado(req: Request, res: Response) {
+            const { limit, offset } = req.query as {limit: string, offset: string}
+
+            let LIMIT = 10
+            let OFFSET = 0
+
+            if (limit && parseInt (limit) > 0) LIMIT = parseInt(limit)
+            if (offset && parseInt (offset) > 0) OFFSET = parseInt(offset)
+
+            const getAllPrestacaoServicoResponse = await prestacaoServicoModel.getAllPrestacaoServicoDetalhada(LIMIT, OFFSET)
+
+            if (!getAllPrestacaoServicoResponse) {
+                return res.status(500).json({
+                    status: "error",
+                    message: "erro ao buscer prestacao de srvico",
+                    data: null
+                })
+            }
+
+            return res.status(200).json({
+                    status: "error",
+                    message: "Prestacoes de serviso buscada com sucesso",
+                    data: getAllPrestacaoServicoResponse
+                })
         }
 }

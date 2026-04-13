@@ -12,12 +12,12 @@ const PropostaRoute = {
     delete:"/delete/:id"
 }
 
-const proposta = Router()
-proposta.post(PropostaRoute.create, PropostaController.createpropostas)
-proposta.get(PropostaRoute.getById, PropostaController.getpropostas)
-proposta.get(PropostaRoute.getAll, PropostaController.allUproposta)
-proposta.put(PropostaRoute.update, PropostaController.updatepropostas)
-proposta.delete(PropostaRoute.delete, PropostaController.deletepropostas)
+const router = Router()
+router.post(PropostaRoute.create, PropostaController.create)
+router.get(PropostaRoute.getById, PropostaController.getAll)
+router.get(PropostaRoute.getAll, PropostaController.get)
+router.put(PropostaRoute.update, PropostaController.update)
+router.delete(PropostaRoute.delete, PropostaController.delete)
 
 
 export { Router }

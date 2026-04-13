@@ -3,7 +3,7 @@ import type { prestadorType } from "../utils/types.js"
 import type { Request, Response } from "express"
 
 export const PrestadorController = {
-    async createPrestador (req: Request, res: Response) {
+    async create (req: Request, res: Response) {
         const newPrestador: prestadorType = req.body
         
                 if (!newPrestador) {
@@ -29,7 +29,7 @@ export const PrestadorController = {
                 })
     },
 
-    async getAllPrestador(req: Request, res: Response) {
+    async getAll(req: Request, res: Response) {
             const getAllPrestadorResponse = await PrestadorModel.getAllPrestador()
             if (!getAllPrestadorResponse) {
                 return res.status(500).json({
@@ -45,7 +45,7 @@ export const PrestadorController = {
             })
         },
     
-        async getPrestador(req: Request, res: Response) {
+        async get(req: Request, res: Response) {
             const id = req.params.id
     
             if (!id) {
@@ -71,7 +71,7 @@ export const PrestadorController = {
             })
         },
     
-        async updatePrestador(req: Request, res: Response) {
+        async update(req: Request, res: Response) {
             const { id } = req.params
     
             const updatedPrestador: prestadorType = req.body
@@ -110,7 +110,7 @@ export const PrestadorController = {
             })
         },
     
-        async deletePrestador(req: Request, res: Response) {
+        async delete(req: Request, res: Response) {
             const { id } = req.params
     
             if (!id) {

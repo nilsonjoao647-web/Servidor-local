@@ -11,12 +11,12 @@ const PrestadorRoute = {
     delete:"/delete/:id"
 }
 
-const Prestador = Router()
-Prestador.post(PrestadorRoute.create, PrestadorController.createPrestador)
-Prestador.get(PrestadorRoute.getById, PrestadorController.getAllPrestador)
-Prestador.get(PrestadorRoute.getAll, PrestadorController.getAllPrestador)
-Prestador.put(PrestadorRoute.update, PrestadorController.updatePrestador)
-Prestador.delete(PrestadorRoute.delete, PrestadorController.deletePrestador)
+const router = Router()
+router.post(PrestadorRoute.create, PrestadorController.create)
+router.get(PrestadorRoute.getById, PrestadorController.getAll)
+router.get(PrestadorRoute.getAll, PrestadorController.getAll)
+router.put(PrestadorRoute.update, PrestadorController.update)
+router.delete(PrestadorRoute.delete, PrestadorController.delete)
 
 
 export { Router }

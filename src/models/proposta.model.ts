@@ -1,35 +1,24 @@
 import type { create } from "node:domain";
 import db from "../lib/db.js";
-import type { PropostaDBType, propostaType } from "../utils/types.js";
+import type {  PropostaDBType, propostaType } from "../utils/types.js";
 import type { RowDataPacket } from "mysql2";
 
 export const PropostaModel = {
-    async createProposta(newProposta: propostaType) {
+    async create(newProposta: propostaType): Promise<PropostaDBType | null> {
         try {
-            const query = 'INSERT INTO table_proposta VALUES (?, ?, ?, ?, ?, ?, ?)'
-
-            const values = [
-                null,
-                newProposta.id_prestacao_servico,
-                newProposta.preco_hora,
-                newProposta.hora_estimadas,
-                newProposta.estado,
-                newProposta.created_at,
-                newProposta.update_at,
-                new Date(),
-                new Date()
-            ]
-
-            const rows = await db.execute(query, values)
-
-
+            const [rows] = await db.execute<PropostaDBType & RowDataPacket[]>(
+                `SELECT * FROM  table_proposta 
+            WHERE tbl_proposta.id_prestacao_servico = ?)`,
+            [id]
+        )
+        return rows as PropostaDBType
         } catch (error) {
             console.log(error)
             return null
         }
     },
 
-    async getAllProposta() {
+    async getAll() {
         try {
             const query = 'SELECT * FROM tbl_proposta'
 
@@ -43,7 +32,7 @@ export const PropostaModel = {
         }
     },
 
-    async getProposta(id: string) {
+    async get(id: string) {
         try {
             const query = 'SELECT * FROM tbl_proposta WHERE id = ?'
 
@@ -59,7 +48,7 @@ export const PropostaModel = {
         }
     },
 
-    async updateProposta(id: string, PropostaAtualizado: propostaType) {
+    async update(id: string, PropostaAtualizado: propostaType) {
         try {
             const query = `UPDATE tbl_proposta
                         SET
@@ -91,7 +80,7 @@ export const PropostaModel = {
         }
     },
 
-    async deleteProposta(id: string) {
+    async delete(id: string) {
         try {
             const query = `DELETE FROM  tbl_Proposta WHERE id =?`
 

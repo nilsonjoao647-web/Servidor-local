@@ -4,7 +4,7 @@ import type { propostaType } from "../utils/types.js"
 import type { Request, Response } from "express"
 
 export const PropostaController = {
-    async createpropostas(req: Request, res: Response) {
+    async create(req: Request, res: Response) {
         const proposta: propostaType = req.body
 
         if (!proposta) {
@@ -12,17 +12,17 @@ export const PropostaController = {
                 error: "utilizador nao encontrado",
             })
         }
-            const createPropostaResponse = await PropostaModel.createProposta(proposta);
+            const createPropostaResponse = await PropostaModel.create(proposta);
             res.json(createPropostaResponse)
     },
 
-async allUproposta(req: Request, res: Response) {
-    const getPropostaResponse = await PropostaModel.getAllProposta()
+async getAll(req: Request, res: Response) {
+    const getPropostaResponse = await PropostaModel.getAll()
 
         res.json(getPropostaResponse);
 },
 
-async getpropostas(req: Request, res: Response) {
+async get(req: Request, res: Response) {
         const id = req.params.id
 
         if (!id) {
@@ -33,7 +33,7 @@ async getpropostas(req: Request, res: Response) {
             })
         }
 
-        const getPropostaResponse = await PropostaModel.getProposta(id as string)
+        const getPropostaResponse = await PropostaModel.get(id as string)
         if (!getPropostaResponse) {
             return res.status(400).json({
                 status: "error",
@@ -48,7 +48,7 @@ async getpropostas(req: Request, res: Response) {
         })
     },
 
-    async updatepropostas(req: Request, res: Response) {
+    async update(req: Request, res: Response) {
         const { id } = req.params
 
         const updatedProposta: propostaType = req.body
@@ -69,7 +69,7 @@ async getpropostas(req: Request, res: Response) {
             })
         }
 
-        const updatedPropostaResponse = await PropostaModel.updateProposta(id as string, updatedProposta)
+        const updatedPropostaResponse = await PropostaModel.update(id as string, updatedProposta)
 
         if (!updatedPropostaResponse) {
             return res.status(400).json({
@@ -87,7 +87,7 @@ async getpropostas(req: Request, res: Response) {
         })
     },
 
-    async deletepropostas(req: Request, res: Response) {
+    async delete(req: Request, res: Response) {
         const { id } = req.params
 
         if (!id) {
@@ -98,7 +98,7 @@ async getpropostas(req: Request, res: Response) {
             })
         }
 
-        const deletePropostaResponse = await PropostaModel.deleteProposta(id as string)
+        const deletePropostaResponse = await PropostaModel.delete(id as string)
         if (!deletePropostaResponse) {
             return res.status(400).json({
                 status: "error",

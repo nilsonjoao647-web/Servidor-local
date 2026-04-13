@@ -12,13 +12,13 @@ const OrcamentoRoute = {
     calcular:"/calcular/:id"
 }
 
-const orcamento = Router()
-orcamento.post(OrcamentoRoute.create, OrcamentoController.createOrcamento)
-orcamento.get(OrcamentoRoute.getById, OrcamentoController.getAllOrcamento)
-orcamento.get(OrcamentoRoute.getAll, OrcamentoController.getAllOrcamento)
-orcamento.put(OrcamentoRoute.update, OrcamentoController.updateOrcamento)
-orcamento.delete(OrcamentoRoute.delete, OrcamentoController.deleteOrcamento)
-orcamento.put(OrcamentoRoute.calcular,OrcamentoController.calcularBudget)
+const router = Router()
+router.post(OrcamentoRoute.create, OrcamentoController.create)
+router.get(OrcamentoRoute.getById, OrcamentoController.getAll)
+router.get(OrcamentoRoute.getAll, OrcamentoController.get)
+router.put(OrcamentoRoute.update, OrcamentoController.update)
+router.delete(OrcamentoRoute.delete, OrcamentoController.delete)
+router.put(OrcamentoRoute.calcular,OrcamentoController.calcularBudget)
 
 
 export { Router }

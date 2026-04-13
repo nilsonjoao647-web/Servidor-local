@@ -8,15 +8,17 @@ const PrestacaoServicoRoute = {
     getById:"/get-by-id/:id",
     getAll:"/",
     update:"/update/:id",
-    delete:"/delete/:id"
+    delete:"/delete/:id",
+    getAllPrestacaoServicoDetalhada: "/get-all-detalhada"
 }
 
-const prestacaoservico = Router()
-prestacaoservico.post(PrestacaoServicoRoute.create, PrestacaoServicoController.createPrestacaoServico)
-prestacaoservico.get(PrestacaoServicoRoute.getById, PrestacaoServicoController.getAllPrestacaoServico)
-prestacaoservico.get(PrestacaoServicoRoute.getAll, PrestacaoServicoController.getAllPrestacaoServico)
-prestacaoservico.put(PrestacaoServicoRoute.update, PrestacaoServicoController.updatePrestacaoServico)
-prestacaoservico.delete(PrestacaoServicoRoute.delete, PrestacaoServicoController.deletePrestacaoServico)
+const router = Router()
+router.post(PrestacaoServicoRoute.create, PrestacaoServicoController.create)
+router.get(PrestacaoServicoRoute.getById, PrestacaoServicoController.getAll)
+router.get(PrestacaoServicoRoute.getAll, PrestacaoServicoController.get)
+router.put(PrestacaoServicoRoute.update, PrestacaoServicoController.update)
+router.delete(PrestacaoServicoRoute.delete, PrestacaoServicoController.delete)
+router.get(PrestacaoServicoRoute.getAllPrestacaoServicoDetalhada, PrestacaoServicoController.getAllPrestacaoServicoDetalhado)
 
 
 export { Router }

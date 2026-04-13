@@ -11,12 +11,12 @@ const ServiceRoute = {
     delete:"/delete/:id"
 }
 
-const servico = Router()
-servico.post(ServiceRoute.create, ServiceController.CreateServico)
-servico.get(ServiceRoute.getById, ServiceController.getAll)
-servico.get(ServiceRoute.getAll, ServiceController.getAll)
-servico.put(ServiceRoute.update, ServiceController.update)
-servico.delete(ServiceRoute.delete, ServiceController.delete)
+const router = Router()
+router.post(ServiceRoute.create, ServiceController.CreateServico)
+router.get(ServiceRoute.getById, ServiceController.getAll)
+router.get(ServiceRoute.getAll, ServiceController.getAll)
+router.put(ServiceRoute.update, ServiceController.update)
+router.delete(ServiceRoute.delete, ServiceController.delete)
 
 
 export { Router }

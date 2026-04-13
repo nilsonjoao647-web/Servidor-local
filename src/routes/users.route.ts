@@ -11,14 +11,14 @@ const UserRoute = {
     login:"/login"
 }
 
-const user = Router()
+const router = Router()
 
-user.post(UserRoute.create, UserController.createUser)
-user.get(UserRoute.getById, UserController.allUsers)
-user.get(UserRoute.getAll, AuthMiddleware, UserController.allUsers)
-user.put(UserRoute.update, UserController.allUsers)
-user.delete(UserRoute.delete, UserController.delete)
-user.post(UserRoute.login, UserController.login)
+router.post(UserRoute.create, UserController.createUser)
+router.get(UserRoute.getById, UserController.allUsers)
+router.get(UserRoute.getAll, AuthMiddleware, UserController.allUsers)
+router.put(UserRoute.update, UserController.allUsers)
+router.delete(UserRoute.delete, UserController.delete)
+router.post(UserRoute.login, UserController.login)
 
 
 
