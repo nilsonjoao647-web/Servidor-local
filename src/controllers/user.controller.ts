@@ -5,7 +5,7 @@ import { comparePassword } from "../utils/password.js"
 import  jwt  from "jsonwebtoken"
 
 export const UserController = {
-    async createUser(req: Request, res: Response) {
+    async create(req: Request, res: Response) {
         const user: userType = req.body
 
         if (!user) {
@@ -17,7 +17,7 @@ export const UserController = {
         res.json(createUserResponse)
     },
 
-    async allUsers(req: Request, res: Response) {
+    async getAll(req: Request, res: Response) {
         const getUserResponse = await UserModel.allUser()
 
         res.json(getUserResponse);
@@ -149,10 +149,20 @@ export const UserController = {
         const playload = {
             id: userData.id,
             email: userData.email,
-            nome: userData.nome
+            nome: userData.nome,
+            role: userData.role
         }
 
         const token = jwt.sign(playload, process.env.JWT_SECRET as string, {expiresIn: "1h"})
         
+
+        return res.status(200).json ({
+            status: "sucess",
+            message: "login realizado com sucesso",
+            data: {
+                token,
+                user: playload
+            }
+        })
     },
 }

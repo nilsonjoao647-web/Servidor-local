@@ -92,45 +92,48 @@ export const ServiceModel = {
 
     async delete(id: string) {
         try {
-        const query = `DELETE FROM  tbl_servicos WHERE id =?`
+            const query = `DELETE FROM  tbl_servicos WHERE id =?`
 
-        const value = [id]
+            const value = [id]
 
-        const rows: any = await db.execute(query, value)
+            const rows: any = await db.execute(query, value)
 
             return rows[0]?.affectedRows === 0 ? null : rows
-    } catch (error) {
-        console.log(error)
-        return null
-    }
+        } catch (error) {
+            console.log(error)
+            return null
+        }
     },
 
 
     async getallServicoDetalhado(limit: number, offset: number): Promise<ServicoDetalhadoType[] | null> {
-        try{
+        try {
             const query = `
-            SELECT
-                id
-                nome
-                descricao
-                designacao as designacao_categoria
-                icone as icone_categoria
-                designacao as designacao_empresa
-                icone as icone_empresa
-                enabled
-                FORM tbl_servicos
-                INNERJOIN tbl_categoria c ON c.id = s.id_categoria
-                INNERJOIN tbl_empresa c ON c.id = s.id_empresa
+            SELECT DISTINCT
+                s.id as id_servico
+                s.nome as servico_nome
+                s.descricao as servico_descricao
+                c.designacao as designacao_categoria
+                c.icone as icone_categoria
+                e.id as id_empresa
+                e.designacao as designacao_empresa
+                e.icone as icone_empresa
+                s.enabled 
+                FORM tbl_servicos s
+                INNER JOIN tbl_categoria c ON c.id = s.id_categoria
+                INNER JOIN tbl_prestacao_servico ps ON s.id = ps.id_servico
+                INNER JOIN tbl_empresa c ON c.id = s.id_empresa
                 LIMIT ? OFFSET?
 
                 `
 
-        const values = [resourceLimits, offset]
+            const values = [limit, offset]
 
-        const [rows] = await db.execute<ServicoDetalhadoType[] & RowDataPacket[]>
+            const [rows] = await db.execute<ServicoDetalhadoType[] & RowDataPacket[]>(query, values)
+            return Array.isArray(rows) && rows.length > 0 ? rows as ServicoDetalhadoType[] : null
+        } catch (error) {
+            console.log(error)
+            return null
         }
-    }catch (error) {
-        console.log(error)
-        return null
     }
 }

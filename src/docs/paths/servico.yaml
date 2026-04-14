@@ -149,3 +149,42 @@ paths:
               schema:
                 type: object
                 $ref: "#/components/schemas/ResposeError"
+
+  /service/all-detailed:
+    get:
+      summary: Apagar um serviço
+      tags:
+        -Servico
+      description: Retomar uma lista de todos os serviços disponíveis com detalhes
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          description: Limite de serviços a serem retomados
+          schema:
+            type: integer
+            example: 10
+        - name: offset
+          in: query
+          required: false
+          description: Offset de serviços a serem retomados
+          schema:
+            type: integer
+            example: 0
+      responses:
+        "200":
+          description: Lista de servoços detalhados
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/servicoDetalhado"
+        "404":
+          description: Nenhum serviço encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/servicoDetalhado"
+
+  
