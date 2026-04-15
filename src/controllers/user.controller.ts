@@ -23,7 +23,7 @@ export const UserController = {
         res.json(getUserResponse);
     },
 
-    async get(req: Request, res: Response) {
+    async getById(req: Request, res: Response) {
         const id = req.params.id
 
         if (!id) {

@@ -137,7 +137,7 @@ export const PrestacaoServicoController = {
             })
         },
 
-        async getAllPrestacaoServicoDetalhado(req: Request, res: Response) {
+        async getAllPrestacaoServicoResponse(req: Request, res: Response) {
             const { limit, offset } = req.query as {limit: string, offset: string}
 
             let LIMIT = 10

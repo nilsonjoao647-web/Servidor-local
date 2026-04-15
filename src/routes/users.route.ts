@@ -16,21 +16,14 @@ const UserRoute = {
 const router = Router()
 
 router.post(UserRoute.login, UserController.login)
-
 router.post(UserRoute.create, UserController.create)
 
 router.use(AuthMiddleware)
 
 router.get(UserRoute.getAll, authorize([Role.ADMIN]), UserController.getAll)
-
-router.get(UserRoute.getById, authorize([Role.ADMIN, Role.CLIENTE, Role.PRESTADOR, Role.EMPRESA]), UserController.getAll)
-
-router.put(UserRoute.update,  authorize([Role.ADMIN, Role.CLIENTE, Role.PRESTADOR, Role.EMPRESA]), UserController.get)
-
+router.get(UserRoute.getById, authorize([Role.ADMIN, Role.CLIENTE, Role.PRESTADOR, Role.EMPRESA]), UserController.getById)
+router.put(UserRoute.update,  authorize([Role.ADMIN, Role.CLIENTE, Role.PRESTADOR, Role.EMPRESA]), UserController.update)
 router.delete(UserRoute.delete,  authorize([Role.ADMIN]), UserController.delete)
-
-router.put(UserRoute.resetPassword,  authorize([Role.ADMIN, Role.CLIENTE, Role.PRESTADOR, Role.EMPRESA]), UserController.resetPassword)
-
-
+// router.put(UserRoute.resetPassword,  authorize([Role.ADMIN, Role.CLIENTE, Role.PRESTADOR, Role.EMPRESA]), UserController.resetPassword)
 
 export { Router }

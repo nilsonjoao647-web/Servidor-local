@@ -4,7 +4,7 @@ import { response, type Request, type Response } from "express"
 
 
 export const ServiceController = {
-    async CreateServico(req: Request, res: Response) {
+    async Create(req: Request, res: Response) {
         const newService: ServicoDBType = req.body
 
         if (!newService) {
