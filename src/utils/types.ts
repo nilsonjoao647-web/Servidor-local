@@ -148,6 +148,7 @@ export interface PropostaDBType {
     preco_hora: number | string,
     hora_estimadas?: number | string,
     estado: string | number,
+    owner?: string,
     enabled: boolean,
     created_at: string,
     update_at: string
@@ -231,4 +232,14 @@ export interface EmpresaDBType {
     enabled: boolean,
     created_at: string,
     updated_at: string
+}
+
+export interface PrestacaoServicoByCategoriaType {
+    id_Prestacao_servico: string,
+    descricao: string,
+    nome_servico: string,
+    nome_categoria: string,
+    icone_categoria: string,
+    data_pedido: string,
+    urgente: boolean
 }

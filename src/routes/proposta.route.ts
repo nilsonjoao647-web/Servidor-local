@@ -16,14 +16,14 @@ const PropostaRoute = {
 
 const router = Router()
 
-router.post(PropostaRoute.create, authorize([Role.ADMIN]), PropostaController.create)
 
 router.use(AuthMiddleware)
 
-router.get(PropostaRoute.getAll, authorize([Role.ADMIN]), PropostaController.get)
-router.get(PropostaRoute.getById, authorize([Role.ADMIN, Role.CLIENTE, Role.PRESTADOR, Role.EMPRESA]), PropostaController.getAll)
-router.put(PropostaRoute.update, authorize([Role.ADMIN, Role.CLIENTE, Role.PRESTADOR, Role.EMPRESA]), PropostaController.update)
-router.delete(PropostaRoute.delete, authorize([Role.ADMIN]), PropostaController.delete)
+router.post(PropostaRoute.create,  PropostaController.create)
+router.get(PropostaRoute.getAll, PropostaController.get)
+router.get(PropostaRoute.getById, PropostaController.getAll)
+router.put(PropostaRoute.update, authorize([Role.ADMIN, Role.PRESTADOR, Role.EMPRESA, "owner"]), PropostaController.update)
+router.delete(PropostaRoute.delete, authorize([Role.ADMIN, Role.PRESTADOR, Role.EMPRESA, "owner" ]), PropostaController.delete)
 
 
 export { Router }

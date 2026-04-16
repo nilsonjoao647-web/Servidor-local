@@ -2,6 +2,7 @@ import type { create } from "node:domain";
 import db from "../lib/db.js";
 import type {  PropostaDBType, propostaType } from "../utils/types.js";
 import type { RowDataPacket } from "mysql2";
+import { id } from "date-fns/locale";
 
 export const PropostaModel = {
     async create(newProposta: propostaType): Promise<PropostaDBType | null> {
@@ -32,15 +33,22 @@ export const PropostaModel = {
         }
     },
 
-    async get(id: string) {
+    async get(id: string): Promise<PropostaDBType | null> {
         try {
-            const query = 'SELECT * FROM tbl_proposta WHERE id = ?'
+            const [rows] = await db.execute<PropostaDBType[] & RowDataPacket[]>(
+                `SELECT DISTINC
+                pt.*,
+                pr.id as owner
+                FROM tbl_proposta pt
+                INNER JOIN tbl_prestadores p ON pt.id_prestador = pr.id
+                INNER JOIN tbl_utilizadores u ON pr.id_utilizador = u.id
+                `,
 
-            const value = [id]
+                [id]
+            )
 
-            const rows = db.execute(query, value)
-
-            return Array.isArray(rows) && rows.length > 0 ? rows[0] : null
+            if (Array.isArray(rows) && rows.length === 0) return null
+            return Array.isArray(rows) ? rows[0]! : null
 
         } catch (error) {
             console.log(error)
