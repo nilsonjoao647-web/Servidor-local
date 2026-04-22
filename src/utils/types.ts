@@ -109,6 +109,7 @@ export interface propostaType {
     preco_hora: string,
     hora_estimadas: string,
     estado: string,
+    owner: string,
     enabled: boolean,
     created_at: string,
     update_at: string
@@ -162,6 +163,7 @@ export interface prestadorDBType {
     taxa_urgencia: number,
     percentagemDesconto: number,
     minimoDesconto: number,
+    disponivel: string,
     nif: string,
     profissao: string,
     enabled: boolean,

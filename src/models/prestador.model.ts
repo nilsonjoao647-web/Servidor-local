@@ -30,7 +30,7 @@ export const PrestadorModel = {
         }
     },
 
-    async getAllPrestador() {
+    async getAll() {
         try {
             const query = 'SELECT * FROM tbl_Prestador'
 
@@ -44,7 +44,7 @@ export const PrestadorModel = {
         }
     },
 
-    async getPrestador(id: string) {
+    async get(id: string) {
         try {
             const query = 'SELECT * FROM tbl_Prestador WHERE id = ?'
 
@@ -60,7 +60,7 @@ export const PrestadorModel = {
         }
     },
 
-    async updatePrestador(id: string, prestadorAtualizado: prestadorType) {
+    async update(id: string, prestadorAtualizado: prestadorType) {
         try {
             const query = `UPDATE tbl_Prestador
                         SET

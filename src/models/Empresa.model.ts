@@ -1,19 +1,24 @@
 import db from "../lib/db.js"
 import { formatDateDDMMYYYY } from "../utils/date.js";
 import { hashPassword } from "../utils/password.js";
-import type { CategoriaDBType } from "../utils/types.js";
+import type { EmpresaDBType } from "../utils/types.js"; 
 import { generateUUID } from "../utils/uuid.js";
 
-export const CategoriaModel = {
-    async create(categorias: CategoriaDBType) {
+export const EmpresaModel = {
+    async create(empresas: EmpresaDBType) {
         try {
             const [rows] = await db.execute(
-                `INSERT INTO tbl_categoria
-            VALUES (?, ?, ?, ?, ?)`,
+                `INSERT INTO tbl_empresas 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                 [
+                    generateUUID(),
                     null,
-                    categorias.designacao,
-                    categorias.icone,
+                    empresas.designacao,
+                    empresas.nif,
+                    empresas.icone,
+                    empresas.id_utilizador,
+                    empresas.localizacao,
+                    empresas.enabled,
                     new Date(),
                     new Date()
                 ]
@@ -50,23 +55,30 @@ export const CategoriaModel = {
         }
     },
 
-    async update(id: string, categoriaAtualizado: CategoriaDBType) {
+    async update(id: string, empresaAtualizado: EmpresaDBType) {
         try {
             const query = `
-            UPDATE tbl_categoria
+            UPDATE tbl_empresas
             SET 
-                id = ?,
+                nome = ?,
                 designacao = ?,
+                nif = ?,
                 icone = ?,
+                id_utilizador = ?,
+                localizacao = ?,
                 enabled = ?,
+                created_at = ?,
                 updated_at = ?
             WHERE id = ?`
 
             const values = [
-                categoriaAtualizado.id,
-                categoriaAtualizado.designacao,
-                categoriaAtualizado.icone,
-                new Date(),
+                empresaAtualizado.designacao,
+                empresaAtualizado.nif,
+                empresaAtualizado.icone,
+                empresaAtualizado.id_utilizador,
+                empresaAtualizado.localizacao,
+                empresaAtualizado.enabled,
+                empresaAtualizado.created_at,
                 new Date(),
                 id
             ]
@@ -99,7 +111,7 @@ export const CategoriaModel = {
         }
     },
 
-    async getByEmail(email: string): Promise<CategoriaDBType | null> {
+    async getByEmail(email: string): Promise<EmpresaDBType | null> {
         try {
             const [rows] = await db.execute(
                 `SELECT * FROM tbl_utilizadores
@@ -108,7 +120,7 @@ export const CategoriaModel = {
             )
 
             if (Array.isArray(rows) && rows.length === 0) return null
-            return Array.isArray(rows) ? rows[0] as CategoriaDBType : null
+            return Array.isArray(rows) ? rows[0] as EmpresaDBType : null
         } catch (error) {
             console.log(error)
             return null
