@@ -64,10 +64,10 @@ export function authorize(roles: string[]) {
 
         if (!userId) return res.status(404).json({message: "Utilizador nao encontrada"}) 
 
-        if (!id) return res.status(404).json({message: "Entidade nao encontrada"}) 
+        if (!id) return res.status(404).json({message: "Entidade nao encontrada"})
+            
+        if (entity[field] !== userId) return res.status(403).json({message:"Permissao insuficiente"})
 
         next()
     }
 }
-
-
