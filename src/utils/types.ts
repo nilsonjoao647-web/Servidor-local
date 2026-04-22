@@ -109,6 +109,7 @@ export interface propostaType {
     preco_hora: string,
     hora_estimadas: string,
     estado: string,
+    enabled: boolean,
     created_at: string,
     update_at: string
 }

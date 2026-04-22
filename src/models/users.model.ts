@@ -33,13 +33,13 @@ export const UserModel = {
         }
     },
 
-    async allUser() {
+    async getAll() {
         const [rows] = await db.execute("SELECT * FROM tbl_utilizadores")
 
         return rows
     },
 
-    async getUser(id: string) {
+    async get(id: string) {
 
         try {
             const [rows] = await db.execute(
