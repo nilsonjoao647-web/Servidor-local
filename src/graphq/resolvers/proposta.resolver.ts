@@ -1,4 +1,5 @@
 
+import { prestacaoServicoModel } from "../../models/prestacao_servico.model.js";
 import { PropostaModel } from "../../models/proposta.model.js";
 import type { propostaType } from "../../utils/types.js";
 
@@ -26,4 +27,13 @@ export const propostaResolver = {
             return await PropostaModel.delete(args.id);
         }
     },
+
+    //Relacionamento de tables
+        Proposta: {
+            PretacaoServico: async (parent: { id: string }) => {
+                return await prestacaoServicoModel.get(parent.id);
+            }
+    
+            
+        }
 }

@@ -1,5 +1,7 @@
 
-import { EmpresaModel } from "../../models/Empresa.model.js"; 
+import { EmpresaModel } from "../../models/Empresa.model.js";
+import { PrestadorModel } from "../../models/prestador.model.js";
+import { UserModel } from "../../models/users.model.js";
 import type { EmpresaDBType } from "../../utils/types.js";
 
 export const empresaResolver = {
@@ -26,4 +28,14 @@ export const empresaResolver = {
             return await EmpresaModel.delete(args.id);
         }
     },
+
+    //Relacionamento de tables
+    Empresa: {
+        user: async (parent: { id: string }) => {
+            return await UserModel.get(parent.id);
+        },
+        Prestador: async (parent: { id: string }) => {
+            return await PrestadorModel.get(parent.id);
+        }
+    }
 }

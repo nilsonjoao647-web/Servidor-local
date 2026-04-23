@@ -47,12 +47,12 @@ export const typeDefs = gql`
         nome: String!,
         descricao: String,
         categoria: String,
-        enabled: boolean;
+        enabled: Boolean,
         created_at: String,
         updated_at: String
     }
 
-    type orcamento {
+    type Orcamento {
         id: ID!,
         total: String,
         id_utilizadores: Utilizador!,
@@ -61,9 +61,9 @@ export const typeDefs = gql`
         update_at: String
     }
 
-    type prestador {
+    type Prestador {
         id: ID!,
-        nif: float!,
+        nif: Float!,
         profissao: String,
         taxa_urgencia: String,
         minimo_desconto: String,
@@ -76,7 +76,7 @@ export const typeDefs = gql`
 
     type Proposta {
         id: ID!,
-        id_prestacao_servico: PretacaoServico,
+        id_prestacao_servico: PrestacaoServico,
         idPrestador: String,
         preco_hora: Float,
         hora_estimadas: Float!,
@@ -87,48 +87,48 @@ export const typeDefs = gql`
         update_at: String
     }
 
-    type prestacaoServico {
+    type PrestacaoServico {
         id: ID!,
-        designacao: string,
-        subtotal: string,
-        urgente: boolean,
-        horasestimadas: string,
+        designacao: String,
+        subtotal: String,
+        urgente: Boolean,
+        horasestimadas: String,
         id_prestador: Prestador,
         id_servico: Servico, 
-        preco_hora: string,
+        preco_hora: String,
         id_utilizador:Utilizador,
         id_orcamento: Orcamento,
         id_empresa: Empresa,
-        tipo_prestador: TipoPretador,
-        enabled: boolean,
-        created_at: string,
-        update_at: string
+        tipo_prestador: TipoPrestador,
+        enabled: Boolean,
+        created_at: String,
+        update_at: String
     }
 
     type Categoria {
         id: ID!,
-        designacao: string,
-        icone: string,
-        created_at: string,
-        updated_at: string
+        designacao: String,
+        icone: String,
+        created_at: String,
+        updated_at: String
     }
 
     type Empresa {
         id: ID!,
-        designacao: string,
-        nif: string!,
-        icone: string,
+        designacao: String,
+        nif: String!,
+        icone: String,
         id_utilizador: Utilizador,
-        localizacao: string!,
-        enabled: boolean,
-        created_at: string,
-        updated_at: string
+        localizacao: String!,
+        enabled: Boolean,
+        created_at: String,
+        updated_at: String
     }
 
     type Query {
         getAllUsers: [Utilizador]
         getUserById(id: ID!): Utilizador
-        getAllServices: [servico]
+        getAllServices: [Servico]
         getServiceById(id: ID!): Servico
     }
 
@@ -148,7 +148,7 @@ export const typeDefs = gql`
             id: ID!, 
             nome: String!, 
             numero_identificacao: String!, 
-            data_nascimento: Strig!, 
+            data_nascimento: String!, 
             email: String!, 
             telefone: String!, 
             pais: String!, 
@@ -158,10 +158,10 @@ export const typeDefs = gql`
             enabled: Boolean
             ): Utilizador
         deleteUser(id: ID!): Utilizador
-        ceateService(
+        ceatedService(
             nome: String!,
             descricao: String,
-            categoria: Categoria)
+            categoria: String):Servico
     }
 
 `

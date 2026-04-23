@@ -1,5 +1,6 @@
 
 import { CategoriaModel } from "../../models/categoria.model.js";
+import { ServiceModel } from "../../models/servico.model.js";
 import type { CategoriaDBType } from "../../utils/types.js";
 
 export const categoriaResolver = {
@@ -24,6 +25,13 @@ export const categoriaResolver = {
 
         deleteCategoria: async (_: any, args: { id: string }) => {
             return await CategoriaModel.delete(args.id);
+        }
+    },
+
+    //Relacionamento de tables
+    Categoria: {
+        Servico: async (parent: { id: string }) => {
+            return await ServiceModel.get(parent.id);
         }
     }
 }

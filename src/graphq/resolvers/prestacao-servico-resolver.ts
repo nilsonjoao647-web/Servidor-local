@@ -1,5 +1,9 @@
 
+import { orcamentoModel } from "../../models/orcamento.model.js";
 import { prestacaoServicoModel } from "../../models/prestacao_servico.model.js";
+import { PrestadorModel } from "../../models/prestador.model.js";
+import { PropostaModel } from "../../models/proposta.model.js";
+import { ServiceModel } from "../../models/servico.model.js";
 import type { prestacaoServicoType } from "../../utils/types.js";
 
 export const pretacaoservicoResolver = {
@@ -23,6 +27,22 @@ export const pretacaoservicoResolver = {
 
         deletePretacaoServico: async (_: any, args: { id: string }) => {
             return await prestacaoServicoModel.delete(args.id);
+        }
+    },
+
+    //Relacionamento de tables
+    PrestacaoServico: {
+        Proposta: async (parent: { id: string }) => {
+            return await PropostaModel.get(parent.id);
+        },
+        Servico: async (parent: { id: string }) => {
+            return await ServiceModel.get(parent.id);
+        },
+        Pretador: async (parent: { id: string }) => {
+            return await PrestadorModel.get(parent.id);
+        },
+        Orcamento: async (parent: { id: string }) => {
+            return await orcamentoModel.get(parent.id);
         }
     }
 }
