@@ -6,7 +6,7 @@ import type { RowDataPacket } from "mysql2";
 export const ServiceModel = {
     async create(newService: ServicoDBType) {
         try {
-            const query = 'INSERT INTO table_servicos VALUES (?, ?, ?, ?, ?, ?, ?)'
+            const query = 'INSERT INTO table_servicos (id, nome, descricao, categoria, enabled, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)'
 
             const values = [
                 null,
@@ -14,15 +14,18 @@ export const ServiceModel = {
                 newService.descricao,
                 newService.categoria,
                 newService.enabled,
-                newService.created_at,
-                newService.updated_at,
                 new Date(),
                 new Date()
             ]
 
             const rows = await db.execute(query, values)
 
+            // select last id
+            const queryLastId = `SELECT * FROM table_servicos ORDER BY id DESC LIMIT 1`
+            const [lastService] = await db.execute<ServicoDBType[] & RowDataPacket[]>(queryLastId)
 
+            return lastService[0] as ServicoDBType
+            
         } catch (error) {
             console.log(error)
             return null

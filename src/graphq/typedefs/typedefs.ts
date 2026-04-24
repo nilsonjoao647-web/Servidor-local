@@ -128,8 +128,10 @@ export const typeDefs = gql`
     type Query {
         getAllUsers: [Utilizador]
         getUserById(id: ID!): Utilizador
-        getAllServices: [Servico]
-        getServiceById(id: ID!): Servico
+        getAllServico: [Servico]
+        getServicoById(id: ID!): Servico
+        getAllProposta: [Proposta]
+        getPropostaById(id: ID!): Proposta
     }
 
     type Mutation {
@@ -158,10 +160,21 @@ export const typeDefs = gql`
             enabled: Boolean
             ): Utilizador
         deleteUser(id: ID!): Utilizador
-        ceatedService(
+        createServico(
             nome: String!,
             descricao: String,
             categoria: String):Servico
+        updateServico(
+            id: ID!,
+            nome: String!,): Servico
+        deleteServico(id: ID!): Servico
+        createProposta(
+            id_prestacao_servico: String!,
+            idPrestador: String!,): Proposta
+        updateProposta(
+            id: ID!,): Proposta
+        deleteProposta(id: ID!): Proposta
+            
     }
 
 `

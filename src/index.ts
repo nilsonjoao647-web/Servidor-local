@@ -1,3 +1,4 @@
+import "dotenv/config"
 import express, { type Request, type Response } from "express"
 import { Router as serviceRouter} from "./routes/servico.route.js"
 import {Router as orcamentoRouter} from "./routes/orcamento.route.js"
@@ -7,14 +8,12 @@ import {Router as propostaRouter } from "./routes/proposta.route.js"
 import {Router as prestasao_ServicoRouter} from "./routes/prestacao_servico.route.js"
 import { swaggerSpec } from "./docs/swagger.js"
 import swaggerUi from "swagger-ui-express"
-import dotenv from "dotenv"
 import { resolvers, typeDefs } from "./graphq/index.js"
 import { ApolloServer } from "@apollo/server"
+import { expressMiddleware } from "@as-integrations/express5"
 
 const app = express()
 app.use(express.json())
-
-dotenv.config()
 
 app.use("/service", serviceRouter)
 app.use("/orcamento", orcamentoRouter)
@@ -31,6 +30,18 @@ const graphqlServer = new ApolloServer ({
 })
 
 await graphqlServer.start()
+
+app.use("/graphql",
+    expressMiddleware(graphqlServer, {
+        context: async ({ req }) => ({
+            token: req.headers.authorization,
+            DH_HOST: process.env.DH_HOST,
+            DB_USER: process.env.DB_USER,
+            DB_PASSWORD: process.env.DB_PASSWORD,
+            DB_NAME: process.env.DB_NAME,
+        }),
+    })
+)
 
 app.get("/", (req: Request, res: Response) => {
     res.send("Hello World!")

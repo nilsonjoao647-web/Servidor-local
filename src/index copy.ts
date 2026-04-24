@@ -1,7 +1,7 @@
 import express, { type Request, type Response } from "express"
 import { addServicesToDB, adicionarServico, apagarServico, deleteService, getAllServices, getServiceById, listarServicos, obterServico, updateService } from "./servico.js"
 import { apagarPrestadoresDeServico, calcularOrcamento, criarPrestadorDeServico, editarPrestadordeServico, selecionarPrestadorPorNome, selecionarServicos } from "./orcamneto.js"
-import type { inserirType, ServicoDBType, UserType } from "./utils/types.js"
+import type { inserirType, ServicoDBType, userType } from "./utils/types.js"
 import db from "./lib/db.js"
 import { createUser, getUsers, getUserById } from "./users.js"
 
@@ -176,7 +176,7 @@ app.get("/get-users-by-id", async (req: Request, res: Response) => {
 
 //rota incerir um utilizador na base de dados
 app.post("/create-user", async (req: Request, res: Response) => {
-    const user: UserType = req.body;
+    const user: userType = req.body;
 
     if (!user) {
         res.status(404).json({
