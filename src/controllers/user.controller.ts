@@ -14,11 +14,11 @@ export const UserController = {
             })
         }
         const createUserResponse = await UserModel.create(user);
-        res.json(createUserResponse)
+        return res.status(200).json(createUserResponse)
     },
 
     async getAll(req: Request, res: Response) {
-        const getUserResponse = await UserModel.allUser()
+        const getUserResponse = await UserModel.getAll()
 
         res.json(getUserResponse);
     },
@@ -34,7 +34,7 @@ export const UserController = {
             })
         }
 
-        const getServiceResponse = await UserModel.getUser(id as string)
+        const getServiceResponse = await UserModel.get(id as string)
         if (!getServiceResponse) {
             return res.status(400).json({
                 status: "error",
